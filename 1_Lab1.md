@@ -83,6 +83,8 @@ We can now connect to the source repository created in stage 1. Here, you use Gi
 user:~/environment $ git clone https://git-codecommit.<YOUR-REGION>.amazonaws.com/v1/repos/WebAppRepo
 
 ```
+You would be seeing the following message if cloning is successful. 
+
 ***warning: You appear to have cloned an empty repository.***
 
 ***
@@ -92,7 +94,7 @@ user:~/environment $ git clone https://git-codecommit.<YOUR-REGION>.amazonaws.co
 1. Download the Sample Web App Archive by running the following command from IDE terminal.
 
 ```console
-user:~/environment $ wget https://github.com/awslabs/aws-devops-essential/raw/master/sample-app/Web-App-Archive.zip
+user:~/environment $ wget https://github.com/p55t/aws-devops-essential/raw/master/sample-app/Web-App-Archive.zip
 ```
 
 2. Unarchive and copy all the **_contents_** of the unarchived folder to your local repo folder.
@@ -118,19 +120,11 @@ user:~/environment/WebAppRepo/ $ git commit -m "Initial Commit"
 
 **_💡 Tip_** To see details about the commit you just made, run **_git log_**.
 
-5. Run **_git config credential_** to store the credential.
-
-```console
-user:~/environment/WebAppRepo/ $ git config credential.helper store
-```
-
-6. Run **_git push_** to push your commit through the default remote name Git uses for your AWS CodeCommit repository (origin), from the default branch in your local repo (master):
+5. Run **_git push_** to push your commit through the default remote name Git uses for your AWS CodeCommit repository (origin), from the default branch in your local repo (master):
 
 ```console
 user:~/environment/WebAppRepo/ $ git push -u origin master
 ```
-
-Provide your Git HTTPs credential when prompted. Credential helper will store it, hence you won't be asked again for subsequent push.
 
 **_💡 Tip_** After you have pushed files to your AWS CodeCommit repository, you can use the [AWS CodeCommit console](https://console.aws.amazon.com/codecommit/home) to view the contents.
 
