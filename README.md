@@ -14,7 +14,7 @@ See the diagram below for a depiction of the complete architecture.
           
 **IAM Permissions:** 
 As the AWS accounts you are about to use are Lab accounts, they do not have permissions to make any changes to IAM settings.
-For any commands/steps that requires IAM Role ARN, please kindly use the pre-created role: **TeamRole** .
+For any commands/steps that requires IAM Role ARN, please kindly use the pre-created role: **Team Role** .
 
 https://console.aws.amazon.com/iam/home?region=ap-southeast-1#/roles/TeamRole
 
