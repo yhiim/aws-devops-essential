@@ -13,7 +13,7 @@ Also, existing pipeline configuration can be exported and used to create pipelin
 2. On the **CodePipeline Home** page, choose **Create pipeline**.
 
 
-3. On the **Step 1: Choose pipeline settings** page, in the **Pipeline name** box, type the name for your pipeline
+3. On the **Step 1: Choose pipeline settings** page, in the **Pipeline name** box, type the name for your pipeline (your choice)
 
 4. For **Service role**, Select **Existing service role** and choose the Role name from drop down starting with **DevopsWorkshop**
 
@@ -26,7 +26,7 @@ After you create a pipeline, you cannot change its name. For information about o
 
 6. On the **Step 2: Source** page, in the **Source provider** drop-down list, choose the type of repository where your source code is stored and specify its required options:
   - **AWS CodeCommit**: In **Repository name**, choose the name of the AWS CodeCommit repository you created in Lab 1 to use as the source location for your pipeline. In **Branch name**, from the drop-down list, choose the **master** branch.
-  - In **Change Detection Mode** leave the default selection of Amazon CloudWatch Events selection. Choose **Next step**.
+  - In **Change Detection Mode** select **AWS CodePipeline**. Choose **Next step**.
 
 7. On the **Step 3: Build** page, do the following
   - Choose **AWS CodeBuild**, and then **Select** an **existing build project** we created in Lab 1.
@@ -50,16 +50,14 @@ Image below shows successfully executed pipeline.
 
 ### Stage 2: Create CodeDeploy Deployment group for Production
 
-1. Run the following to create a deployment group and associates it with the specified application and the user's AWS account. You need to replace the service role ARN we created using roles stack.
+1. Run the following to create a deployment group and associates it with the specified application and the user's AWS account. You need to replace the service role ARN with Team Role ARN.
 
 ```console
-user:~/environment/WebAppRepo (master) $ echo $(aws cloudformation describe-stacks --stack-name DevopsWorkshop-roles | jq -r '.Stacks[0].Outputs[]|select(.OutputKey=="DeployRoleArn")|.OutputValue')
-
 user:~/environment $ aws deploy create-deployment-group --application-name DevOps-WebApp  \
 --deployment-config-name CodeDeployDefault.OneAtATime \
 --deployment-group-name DevOps-WebApp-ProdGroup \
 --ec2-tag-filters Key=Name,Value=ProdWebApp01,Type=KEY_AND_VALUE \
---service-role-arn <<REPLACE-WITH-YOUR-CODEDEPLOY-ROLE-ARN>>
+--service-role-arn <<REPLACE-WITH-TEAM-ROLE-ARN>>
 ```
 
 **_Note:_** We are using the different group name and Production tag to attach instance to the deployment group.
@@ -138,9 +136,21 @@ If you receive a notification that includes a direct link to an approval action,
 Once you approve, the pipeline continues and completes successfully.
 ![pipeline-edit](./img/Lab4-CompletePipeline.png)
 
+***
+
+### Stage 6: Commit Changes to Trigger Automatic Deployment
+
+1. Go back to the Cloud9 environment.
+2. Open up the web.xml file from the path shown below:
+
+![pipeline-edit](./img/webxml.png)
+
+3. Edit <display-name> to add some (!) marks.
+  
+![pipeline-edit](./img/webxmlchanges.png)
+
+4.
+
 ### Summary
 
-This **concludes Lab 3**. In this lab, we successfully created CodePipeline for continuous code build and deployment. We also modified CodePipeline to include manual approval action before deploying code to production environment. We also successfully completed continuous deployment of application to both test and production servers. You can now move to the next Lab,
-
-[Lab 4 (Optional) - Using Lambda as Test Stage in CodePipeline](4_Lab4.md)
-
+This **concludes Lab 3**. In this lab, we successfully created CodePipeline for continuous code build and deployment. We also modified CodePipeline to include manual approval action before deploying code to production environment. We also successfully completed continuous deployment of application to both test and production servers.
