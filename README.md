@@ -18,6 +18,8 @@ For any commands/steps that requires IAM Role ARN, please kindly use the pre-cre
 
 https://console.aws.amazon.com/iam/home?region=ap-southeast-1#/roles/TeamRole
 
+***It will be useful to note down the ARN for Team Role which will be required throughout the lab***
+
 ***
 
 ### **Important:**
