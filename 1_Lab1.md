@@ -55,7 +55,25 @@ Keep an open scratch pad in Cloud9 or a text editor on your local computer for n
 
 ### Stage 2: Clone the Repo
 
-In this step, you will connect to the source repository created in the previous step. Here, you use Git to clone and initialize a copy of your empty AWS CodeCommit repository. Then you specify the user name and email address used to annotate your commits.
+Before we start to clone the Repo, we need to configure the AWS CLI credential helper to manage the credentials for connections to your CodeCommit repository. The AWS Cloud9 development environment comes with AWS managed temporary credentials that are associated with your IAM user. You use these credentials with the AWS CLI credential helper.
+
+1. Update the packages within your AWS Cloud9 instance.
+```console
+user:~/environment $ sudo yum update -y
+
+```
+2. Configure your chosen user name and email to be associated with your Git commits by running the git config command. For example:
+```console
+user:~/environment $ git config --global user.name "Mary Major"
+user:~/environment $ git config --global user.email mary.major@example.com
+```
+3. Run the following commands to configure the AWS CLI credential helper for HTTPS connections:
+```console
+user:~/environment $ git config --global credential.helper '!aws codecommit credential-helper $@'
+user:~/environment $ git config --global credential.UseHttpPath true
+```
+
+We can now connect to the source repository created in stage 1. Here, you use Git to clone and initialize a copy of your empty AWS CodeCommit repository.
 
 1. From CodeCommit Console, you can get the **https clone url** link for your repo.
 2. Go to Cloud9 IDE terminal prompt
@@ -65,8 +83,7 @@ In this step, you will connect to the source repository created in the previous 
 user:~/environment $ git clone https://git-codecommit.<YOUR-REGION>.amazonaws.com/v1/repos/WebAppRepo
 
 ```
-
-Provide your Git HTTPs credential when prompted. You would be seeing the following message if cloning is successful. ***warning: You appear to have cloned an empty repository.***
+***warning: You appear to have cloned an empty repository.***
 
 ***
 
