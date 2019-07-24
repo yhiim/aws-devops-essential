@@ -136,18 +136,17 @@ For more information, see [Browse the Contents of a Repository](http://docs.aws.
 
 ### Stage 4: Prepare Build Service
 
-1. First, let us create the necessary roles required to finish labs. Run the CloudFormation stack to create service roles.
+1. First, let us create an S3 buckets to store artifacts for our build/deploy artifacts. Run the CloudFormation stack to create S3 bucket.
   Ensure you are launching it in the same region as your AWS CodeCommit repo.
 
 ```console
 user:~/environment/WebAppRepo (master) $ aws cloudformation create-stack --stack-name DevopsWorkshop-roles \
---template-body https://s3.amazonaws.com/devops-workshop-0526-2051/01-aws-devops-workshop-roles.template \
---capabilities CAPABILITY_IAM
+--template-body https://yhlim-share.s3-ap-southeast-1.amazonaws.com/labs/devops/01-aws-devops-workshop-s3.template
 ```
 
 **_Tip_** To learn more about AWS CloudFormation, please refer to [AWS CloudFormation UserGuide.](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
 
-2. Upon completion take a note on the service roles created. Check [describe-stacks](http://docs.aws.amazon.com/cli/latest/reference/cloudformation/describe-stacks.html) to find the output of the stack.
+2. Upon completion take a note of the name of the bucket created. Check [describe-stacks](http://docs.aws.amazon.com/cli/latest/reference/cloudformation/describe-stacks.html) to find the output of the stack.
 
 3. For Console, refer to the CloudFormation [Outputs tab](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-view-stack-data-resources.html) to see output. A S3 Bucket is also created. Make a note of this bucket. This will be used to store the output from CodeBuild in the next step. **_Sample Output:_** ![](./img/cfn-output.png)
 
