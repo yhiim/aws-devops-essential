@@ -1,7 +1,7 @@
 
 ## Lab 2 - Automate deployment for testing
 
-### Stage 1: Prepare environment for Testing
+### Stage 1: Prepare environment for Testing (as well as for Production - Lab 3)
 
 1. Run the CloudFormation stack using the following AWS CLI command:
 
@@ -9,6 +9,42 @@
 user:~/environment/WebAppRepo (master) $ aws cloudformation create-stack --stack-name DevopsWorkshop-Env \
 --template-body https://yhlim-share.s3-ap-southeast-1.amazonaws.com/labs/devops/02-aws-devops-workshop-environment-setup.template 
 ```
+2. After the CloudFromation Stack has completed, go to view your EC2 instances:
+
+https://ap-southeast-1.console.aws.amazon.com/ec2/v2/home?region=ap-southeast-1#Instances:sort=desc:launchTime
+
+#### Note: The additional steps below are required due to the IAM constraints of the Lab AWS Accounts. ####
+
+3. Attach IAM Role (Team Role) to the the Dev EC2 instance (DevWebApp01) created by selecting the instance and click on the ***Action Button -> Instance -> Instance Settings -> Attach/Detach IAM Role***.
+
+4. Next find in the drop-down box the ***Team Role*** under IAM Role and click Apply.
+
+5. Repeat steps 2-4 for Production EC2 Instance (ProdWebApp01).
+
+6. Go to Security Group:
+https://ap-southeast-1.console.aws.amazon.com/ec2/v2/home?region=ap-southeast-1#SecurityGroups:Name=WebAppSG;sort=vpcId
+
+7. Look for ***WebAppSg*** Security Group and copy/remember the ***Group ID***.
+
+8. Select ***WebAppSG*** Security Group and click on the Inbound tab and click Edit.
+
+9. Add a new Rule, Type = SSH, Source = Custom, paste the ***Group ID*** copied earlier. Click Save.
+
+10. Go to Systems Manager:
+https://ap-southeast-1.console.aws.amazon.com/systems-manager/session-manager/sessions?region=ap-southeast-1
+
+11. Click ***Start Session***, select DevWebApp01 and click Update SSM Agent twice and go back to Systems Manager:
+https://ap-southeast-1.console.aws.amazon.com/systems-manager/session-manager/sessions?region=ap-southeast-1
+
+12. Click ***Start Session***, select DevWebApp01 and click Start Session.
+
+13. Run the following command to restart the CodeDeploy Agent. ***It will take some time to restart, terminate the session after it ends***
+
+```console
+$ sudo service codedeploy-agent restart
+```
+
+14. Repeat steps 10-13 for Prodcution EC2 Instance (ProdWebApp01). 
 
 **_Note_**
   - The Stack will have a VPC w/ 1 public subnet, an IGW, route tables, ACL, 2 EC2 instances. Also, the EC2 instances will be launched with a User Data script to **automatically install the AWS CodeDeploy agent**.
@@ -25,16 +61,14 @@ user:~/environment/WebAppRepo (master) $ aws cloudformation create-stack --stack
 user:~/environment/WebAppRepo (master) $ aws deploy create-application --application-name DevOps-WebApp
 ```
 
-2. Run the following to create a deployment group and associates it with the specified application and the user's AWS account. You need to replace the service role with **DeployRoleArn Value** we created using roles CFN stack.
+2. Run the following to create a deployment group and associates it with the specified application and the user's AWS account. You need to replace the service role with **Team Role**.
 
 ```console
-user:~/environment/WebAppRepo (master) $ echo $(aws cloudformation describe-stacks --stack-name DevopsWorkshop-roles | jq -r '.Stacks[0].Outputs[]|select(.OutputKey=="DeployRoleArn")|.OutputValue')
-
 user:~/environment/WebAppRepo (master) $ aws deploy create-deployment-group --application-name DevOps-WebApp \
 --deployment-config-name CodeDeployDefault.OneAtATime \
 --deployment-group-name DevOps-WebApp-BetaGroup \
 --ec2-tag-filters Key=Name,Value=DevWebApp01,Type=KEY_AND_VALUE \
---service-role-arn <<REPLACE-WITH-YOUR-CODEDEPLOY-ROLE-ARN>>
+--service-role-arn <<REPLACE-WITH-TEAM-ROLE-ARN>>
 ```
 
 **_Note:_** We are using the tags to attach instances to the deployment group.
