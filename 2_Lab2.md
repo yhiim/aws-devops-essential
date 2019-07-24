@@ -7,8 +7,7 @@
 
 ```console
 user:~/environment/WebAppRepo (master) $ aws cloudformation create-stack --stack-name DevopsWorkshop-Env \
---template-body https://s3.amazonaws.com/devops-workshop-0526-2051/02-aws-devops-workshop-environment-setup.template \
---capabilities CAPABILITY_IAM
+--template-body https://yhlim-share.s3-ap-southeast-1.amazonaws.com/labs/devops/02-aws-devops-workshop-environment-setup.template 
 ```
 
 **_Note_**
