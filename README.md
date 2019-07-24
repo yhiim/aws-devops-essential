@@ -1,5 +1,6 @@
 # AWS DevOps Essentials
 ### Note that this lab guide is meant for AWS Lab Accounts, please follow [this lab guide](https://github.com/awslabs/aws-devops-essential) if you are using your own AWS account
+### IMPORTANT: Please kindy read the section on Prerequisites - Lab Environment before starting the lab.
 
 ## An Introductory Workshop on CI/CD Practices
 
@@ -10,32 +11,12 @@ See the diagram below for a depiction of the complete architecture.
 ![DevOps Workshop Architecture](img/CICD_DevOps_Demo.png)
 
 ## Prerequisites - Lab Environment
-
-* **Configure AWS CodeCommit:** 
-
-
           
-* **IAM Permissions:** Finally, for the AWS account ensure you have sufficient privileges. You must have permissions for the following services:
+**IAM Permissions:** 
+As the AWS accounts you are about to use are Lab accounts, they do not have permissions to make any changes to IAM settings.
+For any commands/steps that requires IAM Role ARN, please kindly use the pre-created role: **TeamRole** .
 
-AWS Identity and Access Management
-
-Amazon Simple Storage Service
-
-AWS CodeCommit
-
-AWS CodeBuild
-
-AWS CloudFormation
-
-AWS CodeDeploy
-
-AWS CodePipeline
-
-AWS Cloud9
-
-Amazon EC2
-
-Amazon SNS
+https://console.aws.amazon.com/iam/home?region=ap-southeast-1#/roles/TeamRole
 
 ***
 
