@@ -148,13 +148,12 @@ user:~/environment/WebAppRepo (master) $ aws cloudformation create-stack --stack
 
 2. Upon completion take a note of the name of the bucket created. Check [describe-stacks](http://docs.aws.amazon.com/cli/latest/reference/cloudformation/describe-stacks.html) to find the output of the stack.
 
-3. For Console, refer to the CloudFormation [Outputs tab](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-view-stack-data-resources.html) to see output. A S3 Bucket is also created. Make a note of this bucket. This will be used to store the output from CodeBuild in the next step. **_Sample Output:_** ![](./img/cfn-output.png)
+3. For Console, refer to the CloudFormation [Outputs tab](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-view-stack-data-resources.html) to see output. Make a note of the S3 bucket name. This will be used to store the output from CodeBuild in the next step. **_Sample Output:_** ![](./img/cfn-output.png)
 
-4. Run the following commands to get the value of Build Role ARN and S3 bucket from cloudformation template launched earlier.
+4. Run the following commands to get the value of the S3 bucket from cloudformation template launched earlier.
 
 ```console
 user:~/environment/WebAppRepo (master) $ sudo yum -y install jq
-user:~/environment/WebAppRepo (master) $ echo $(aws cloudformation describe-stacks --stack-name DevopsWorkshop-roles | jq -r '.Stacks[0].Outputs[]|select(.OutputKey=="BuildRoleArn")|.OutputValue')
 user:~/environment/WebAppRepo (master) $ echo $(aws cloudformation describe-stacks --stack-name DevopsWorkshop-roles | jq -r '.Stacks[0].Outputs[]|select(.OutputKey=="S3BucketName")|.OutputValue')
 ```
 
@@ -171,7 +170,7 @@ user:~/environment/WebAppRepo (master) $ echo $(aws cloudformation describe-stac
   },
   "artifacts": {
     "type": "S3",
-    "location": "<<REPLACE-YOUR-CODEBUILD-OUTPUT-BUCKET>>",
+    "location": "<<REPLACE-YOUR-CODEBUILD-OUTPUT-BUCKET-FROM-CLOUD-FROMATION>>",
     "packaging": "ZIP",
     "name": "WebAppOutputArtifact.zip"
   },
@@ -180,7 +179,7 @@ user:~/environment/WebAppRepo (master) $ echo $(aws cloudformation describe-stac
     "image": "aws/codebuild/java:openjdk-8",
     "computeType": "BUILD_GENERAL1_SMALL"
   },
-  "serviceRole": "<<REPLACE-BuildRoleArn-Value-FROM-CLOUDFORMATION-OUTPUT>>"
+  "serviceRole": "<<REPLACE-WITH-TEAM-ROLE-ARN>>"
 }
 ```
     
