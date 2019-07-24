@@ -42,10 +42,10 @@
     },
 
     "AWSRegionVirt2AMI": {
-      "us-east-1": {"HVM": "ami-8c1be5f6"},
-      "us-east-2": {"HVM": "ami-c5062ba0"},
-      "us-west-2": {"HVM": "ami-e689729e"},
-      "us-west-1": {"HVM":"ami-02eada62"},
+      "us-east-1": {"HVM": "ami-09479453c5cde9639"},
+      "us-east-2": {"HVM": "ami-023c8dbf8268fb3ca"},
+      "us-west-2": {"HVM": "ami-0bb5806b2e825a199"},
+      "us-west-1": {"HVM":"ami-06ff511fea5db2c99"},
       "ap-northeast-1": {"HVM": "ami-2a69be4c"},
       "ap-northeast-2": {"HVM": "ami-9bec36f5"},
       "ap-south-1": {"HVM": "ami-4fc58420"},
@@ -174,84 +174,6 @@
       }
     },
 
-    "WebAppRole": {
-      "Type": "AWS::IAM::Role",
-      "Properties": {
-        "AssumeRolePolicyDocument": {
-          "Statement": [
-            {
-              "Sid": "",
-              "Effect": "Allow",
-              "Principal": {
-                "Service": "ec2.amazonaws.com"
-              },
-              "Action": "sts:AssumeRole"
-            }
-          ]
-        },
-        "ManagedPolicyArns" : [ "arn:aws:iam::aws:policy/AWSCodeDeployReadOnlyAccess", "arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess" ],
-        "Path": "/"
-      }
-    },
-
-    "WebAppRolePolicies": {
-      "Type": "AWS::IAM::Policy",
-      "Properties": {
-        "PolicyName": "BackendRole",
-        "PolicyDocument": {
-          "Statement": [
-            {
-              "Effect":"Allow",
-              "Action":"cloudformation:DescribeStackResources",
-              "Resource" : [
-                { "Fn::Join" : ["", [ "arn:aws:cloudformation:", { "Ref" : "AWS::Region" }, ":", {"Ref":"AWS::AccountId"}, ":stack/", { "Ref": "AWS::StackName" }, "/*"]]}
-              ]
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "autoscaling:Describe*",
-                "autoscaling:EnterStandby",
-                "autoscaling:ExitStandby",
-                "autoscaling:UpdateAutoScalingGroup"
-              ],
-              "Resource" : "*"
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "ec2:DescribeInstances",
-                "ec2:DescribeInstanceStatus"
-              ],
-              "Resource": "*"
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "s3:Get*",
-                "s3:List*"
-              ],
-              "Resource": [
-                { "Fn::Join" : ["", [ "arn:aws:s3:::cicd-workshop-", { "Ref": "AWS::Region" } , "-", {"Ref" : "AWS::AccountId"} ]] },
-                { "Fn::Join" : ["", [ "arn:aws:s3:::cicd-workshop-", { "Ref": "AWS::Region" } , "-", {"Ref" : "AWS::AccountId"}, "/*" ]] },
-                { "Fn::Join" : ["", [ "arn:aws:s3:::codepipeline-", "*" ]] }
-
-              ]
-            }
-          ]
-        },
-        "Roles": [{"Ref": "WebAppRole"}]
-      }
-    },
-
-    "WebAppInstanceProfile": {
-      "Type": "AWS::IAM::InstanceProfile",
-      "Properties": {
-        "Path": "/",
-        "Roles": [{"Ref": "WebAppRole"}]
-      }
-    },
-
     "WebAppSG" : {
       "Type" : "AWS::EC2::SecurityGroup",
       "Properties" : {
@@ -278,7 +200,6 @@
       "Properties": {
         "ImageId" : { "Fn::FindInMap" : [ "AWSRegionVirt2AMI", { "Ref" : "AWS::Region" }, {"Fn::FindInMap": ["AWSInstanceType2Virt", { "Fn::FindInMap" : [ "instancesTypes", "Demo", "INST" ]}, "Virt"]} ]},
         "InstanceType" : { "Fn::FindInMap" : [ "instancesTypes", "Demo", "INST" ]},
-        "IamInstanceProfile" : {"Ref":"WebAppInstanceProfile"},
         "EbsOptimized" : {"Fn::FindInMap": ["AWSInstanceType2EBSOpt", { "Fn::FindInMap" : [ "instancesTypes", "Demo", "INST" ]}, "EBSOpt"]},
         "NetworkInterfaces" : [{
           "SubnetId" : { "Ref" : "publicSubnet01" },
@@ -311,7 +232,6 @@
       "Properties": {
         "ImageId" : { "Fn::FindInMap" : [ "AWSRegionVirt2AMI", { "Ref" : "AWS::Region" }, {"Fn::FindInMap": ["AWSInstanceType2Virt", { "Fn::FindInMap" : [ "instancesTypes", "Demo", "INST" ]}, "Virt"]} ]},
         "InstanceType" : { "Fn::FindInMap" : [ "instancesTypes", "Demo", "INST" ]},
-        "IamInstanceProfile" : {"Ref":"WebAppInstanceProfile"},
         "EbsOptimized" : {"Fn::FindInMap": ["AWSInstanceType2EBSOpt", { "Fn::FindInMap" : [ "instancesTypes", "Demo", "INST" ]}, "EBSOpt"]},
         "NetworkInterfaces" : [{
           "SubnetId" : { "Ref" : "publicSubnet01" },
