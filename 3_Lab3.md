@@ -145,11 +145,31 @@ Once you approve, the pipeline continues and completes successfully.
 
 ![pipeline-edit](./img/webxml.png)
 
-3. Edit <display-name> to add some (!) marks.
+3. Edit <display-name> to add some (!) marks and save the file.
   
 ![pipeline-edit](./img/webxmlchanges.png)
 
-4.
+4. Change the directory to your local repo folder. Run **_git add_** to stage the change:
+
+```console
+user:~/environment $ cd WebAppRepo
+user:~/environment/WebAppRepo/ $ git add *
+```
+
+5. Run **_git commit_** to commit the change:
+
+```console
+user:~/environment/WebAppRepo/ $ git commit -m "Let it fly!"
+```
+
+6. Run **_git push_** to push your commit through the default remote name Git uses for your AWS CodeCommit repository (origin), from the default branch in your local repo (master):
+
+```console
+user:~/environment/WebAppRepo/ $ git push -u origin master
+```
+
+***This will trigger the Code Pipeline to execute and deploy the changes (with approval) into the production environment*** 
+
 
 ### Summary
 
