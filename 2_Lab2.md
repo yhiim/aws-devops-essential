@@ -9,9 +9,7 @@
 user:~/environment/WebAppRepo (master) $ aws cloudformation create-stack --stack-name DevopsWorkshop-Env \
 --template-body https://yhlim-share.s3-ap-southeast-1.amazonaws.com/labs/devops/02-aws-devops-workshop-environment-setup.template 
 ```
-2. After the CloudFromation Stack has completed, go to view your EC2 instances:
-
-https://ap-southeast-1.console.aws.amazon.com/ec2/v2/home?region=ap-southeast-1#Instances:sort=desc:launchTime
+2. After the CloudFromation Stack has completed, go to view your [EC2 console](https://ap-southeast-1.console.aws.amazon.com/ec2/v2/home?region=ap-southeast-1#Instances:sort=desc:launchTime) to view the EC2 instances.
 
 **_Note_**
   - The Stack will have a VPC w/ 1 public subnet, an IGW, route tables, ACL, 2 EC2 instances. Also, the EC2 instances will be launched with a User Data script to **automatically install the AWS CodeDeploy agent**.
@@ -22,7 +20,9 @@ https://ap-southeast-1.console.aws.amazon.com/ec2/v2/home?region=ap-southeast-1#
 
 3. Attach IAM Role (Team Role) to the the Dev EC2 instance (DevWebApp01) created by selecting the instance and click on the ***Action Button -> Instance -> Instance Settings -> Attach/Detach IAM Role***.
 
-4. Next find in the drop-down box the ***TeamRoleInstanceProfile*** under IAM Role and click Apply.
+![AttachRole](./img/attach-role.png)
+
+4. Next find in the drop-down box the ***Team Role*** under IAM Role and click Apply.
 
 5. Repeat steps 2-4 for Production EC2 Instance (ProdWebApp01).
 
