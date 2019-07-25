@@ -147,7 +147,6 @@ user:~/environment/WebAppRepo (master) $ aws cloudformation create-stack --stack
 **_Tip_** To learn more about AWS CloudFormation, please refer to [AWS CloudFormation UserGuide.](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
 
 2. Upon completion take a note of the name of the bucket created. Check [describe-stacks](http://docs.aws.amazon.com/cli/latest/reference/cloudformation/describe-stacks.html) to find the output of the stack.
-
 ```console
 user:~/environment/WebAppRepo (master) $ aws cloudformation describe-stacks
 ```
@@ -174,7 +173,7 @@ user:~/environment/WebAppRepo (master) $ echo $(aws cloudformation describe-stac
   },
   "artifacts": {
     "type": "S3",
-    "location": "<<REPLACE-YOUR-CODEBUILD-OUTPUT-BUCKET-FROM-CLOUD-FROMATION>>",
+    "location": "<<REPLACE-YOUR-CODEBUILD-OUTPUT-BUCKET-FROM-CLOUDFORMATION>>",
     "packaging": "ZIP",
     "name": "WebAppOutputArtifact.zip"
   },
