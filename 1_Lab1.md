@@ -148,7 +148,7 @@ user:~/environment/WebAppRepo (master) $ aws cloudformation create-stack --stack
 
 2. Upon completion take a note of the name of the bucket created. Check [describe-stacks](http://docs.aws.amazon.com/cli/latest/reference/cloudformation/describe-stacks.html) to find the output of the stack.
 
-3. For Console, refer to the CloudFormation [Outputs tab](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-view-stack-data-resources.html) to see output. Make a note of the S3 bucket name. This will be used to store the output from CodeBuild in the next step. **_Sample Output:_** ![](./img/cfn-output.png)
+3. In the [Cloudformation Console](https://ap-southeast-1.console.aws.amazon.com/cloudformation/home?region=ap-southeast-1), refer to the CloudFormation [Outputs tab](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-view-stack-data-resources.html) to see output. Make a note of the S3 bucket name. This will be used to store the output from CodeBuild in the next step. **_Sample Output:_** ![](./img/cfn-output.png)
 
 4. Run the following commands to get the value of the S3 bucket from cloudformation template launched earlier.
 
@@ -170,7 +170,7 @@ user:~/environment/WebAppRepo (master) $ echo $(aws cloudformation describe-stac
   },
   "artifacts": {
     "type": "S3",
-    "location": "<<REPLACE-YOUR-CODEBUILD-OUTPUT-BUCKET-FROM-CLOUD-FROMATION>>",
+    "location": "<<REPLACE-YOUR-CODEBUILD-OUTPUT-BUCKET-FROM-CLOUDFORMATION>>",
     "packaging": "ZIP",
     "name": "WebAppOutputArtifact.zip"
   },
