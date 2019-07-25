@@ -80,7 +80,7 @@ We can now connect to the source repository created in stage 1. Here, you use Gi
 3. Run git clone to pull down a copy of the repository into the local repo:
 
 ```console
-user:~/environment $ git clone https://git-codecommit.<YOUR-REGION>.amazonaws.com/v1/repos/WebAppRepo
+user:~/environment $ git clone https://git-codecommit.ap-southeast-1.amazonaws.com/v1/repos/WebAppRepo
 
 ```
 You would be seeing the following message if cloning is successful. 
@@ -137,7 +137,7 @@ For more information, see [Browse the Contents of a Repository](http://docs.aws.
 ### Stage 4: Prepare Build Service
 
 1. First, let us create an S3 buckets to store artifacts for our build/deploy artifacts. Run the CloudFormation stack to create S3 bucket.
-  Ensure you are launching it in the same region as your AWS CodeCommit repo.
+  Ensure you are launching it in the same region (Singapore: ap-southeast-1) as your AWS CodeCommit repo.
 
 ```console
 user:~/environment/WebAppRepo (master) $ aws cloudformation create-stack --stack-name DevopsWorkshop-roles \
@@ -158,7 +158,7 @@ user:~/environment/WebAppRepo (master) $ echo $(aws cloudformation describe-stac
 ```
 
 5. Let us **create CodeBuild** project from **CLI**. To create the build project using AWS CLI, we need JSON-formatted input.
-    **_Create_** a json file named **_'create-project.json'_** under 'MyDevEnvironment'. ![](./img/create-json.png) Copy the content below to create-project.json. (Replace the placeholders marked with **_<<>>_** with  values for BuildRole ARN, S3 Output Bucket and region from the previous step.) 
+    **_Create_** a json file named **_'create-project.json'_** under 'MyDevEnvironment'. ![](./img/create-json.png) Copy the content below to create-project.json. (Replace the placeholders marked with **_<<>>_** with  values for BuildRole ARN and S3 Output Bucket from the previous step.) 
     
 
 ```json
@@ -166,7 +166,7 @@ user:~/environment/WebAppRepo (master) $ echo $(aws cloudformation describe-stac
   "name": "devops-webapp-project",
   "source": {
     "type": "CODECOMMIT",
-    "location": "https://git-codecommit.<<REPLACE-YOUR-REGION-ID>>.amazonaws.com/v1/repos/WebAppRepo"
+    "location": "https://git-codecommit.ap-southeast-1.amazonaws.com/v1/repos/WebAppRepo"
   },
   "artifacts": {
     "type": "S3",
