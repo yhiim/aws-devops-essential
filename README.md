@@ -20,6 +20,11 @@ https://console.aws.amazon.com/iam/home?region=ap-southeast-1#/roles/TeamRole
 
 ***It will be useful to note down the ARN for Team Role which will be required throughout the lab***
 
+**Getting TeamRole ARN via console:**
+```console
+user:~/environment/ (master) $ aws iam get-role --role-name TeamRole
+```
+Note down the "ARN" portion of the JSON output.
 ***
 
 ### **Important:**
