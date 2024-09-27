@@ -9,13 +9,13 @@
 user:~/environment/WebAppRepo (master) $ aws cloudformation create-stack --stack-name DevopsWorkshop-Env \
 --template-body https://yhlim-share.s3-ap-southeast-1.amazonaws.com/labs/devops/02-aws-devops-workshop-environment-setup.template 
 ```
-2. After the CloudFromation Stack has completed, go to view your EC2 instances:
-
-https://ap-southeast-1.console.aws.amazon.com/ec2/v2/home?region=ap-southeast-1#Instances:sort=desc:launchTime
+2. After the CloudFromation Stack has completed, go to view your [EC2 console](https://ap-southeast-1.console.aws.amazon.com/ec2/v2/home?region=ap-southeast-1#Instances:sort=desc:launchTime) to view the EC2 instances.
 
 #### Note: The additional steps below are required due to the IAM constraints of the Lab AWS Accounts. ####
 
 3. Attach IAM Role (Team Role) to the the Dev EC2 instance (DevWebApp01) created by selecting the instance and click on the ***Action Button -> Instance -> Instance Settings -> Attach/Detach IAM Role***.
+
+![AttachRole](./img/attach-role.png)
 
 4. Next find in the drop-down box the ***Team Role*** under IAM Role and click Apply.
 
